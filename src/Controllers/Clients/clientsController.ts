@@ -1,5 +1,6 @@
 import ClientsModel from "../../Models/Clients/clientsModel";
 import { ICreateClient } from "../../Interfaces/Clients/create-client.interface";
+
 export default class ClientsController {
 
     private ClientsModel: ClientsModel
@@ -9,7 +10,7 @@ export default class ClientsController {
     }
 
 
-    public createUser = async (req: any, res: any) => {
+    public createClient = async (req: any, res: any) => {
         try {
             const client = req.body
             const created = await this.ClientsModel.createClient(client)
