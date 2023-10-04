@@ -1,5 +1,6 @@
 import ClientsSchema from '../../Schemas/Client/clientsSchema'
 import { ICreateClient } from '../../Interfaces/Clients/create-client.interface';
+
 export default class ClientsModel {
 
     public createClient = async (client: ICreateClient) => {
