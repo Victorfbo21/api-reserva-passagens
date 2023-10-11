@@ -7,11 +7,11 @@ export default class ClientsModel {
             const clientCreated = new ClientsSchema({ ...client })
             const savedClient = await clientCreated.save();
             console.log('Client Saved Successfully!');
+
             return savedClient;
         }
         catch (err) {
-            console.log('Error saving client:');
-            console.log(err);
+            console.log('Error saving client:', err);
         }
     }
 
@@ -27,7 +27,9 @@ export default class ClientsModel {
             })
                 .skip(skip || 0)
                 .limit(limit || 0);
+
             return clients;
+
         } catch (e) {
             console.log('Error Finding Users', e);
             return null;
@@ -37,6 +39,7 @@ export default class ClientsModel {
     public deleteClient = async (id: string) => {
         try {
             const deletedClient = await ClientsSchema.findByIdAndRemove(id);
+
             return deletedClient;
         } catch (e) {
             console.log('Error on Delete User:', e);

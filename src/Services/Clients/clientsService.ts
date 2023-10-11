@@ -24,7 +24,7 @@ export default class ClientsService {
         }
     }
 
-    public getClients = async (filter, skip, limit) => {
+    public getClients = async (filter: string, skip: number, limit: number) => {
         try {
             const find = await this.ClientsModel.getClients(filter, skip, limit);
 
