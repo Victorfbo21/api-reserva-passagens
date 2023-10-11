@@ -1,19 +1,19 @@
 import ClientsModel from "../../Models/Clients/clientsModel";
 import { ICreateClient } from "../../Interfaces/Clients/create-client.interface";
+import ClientsService from '../../Services/Clients/clientsService'
+
 export default class ClientsController {
 
-    private ClientsModel: ClientsModel
+    private ClientsService: ClientsService
 
     constructor() {
-        this.ClientsModel = new ClientsModel();
+        this.ClientsService = new ClientsService();
     }
-
 
     public createUser = async (req: any, res: any) => {
         try {
             const client = req.body
-            const created = await this.ClientsModel.createClient(client)
-
+            const created = await this.ClientsService.createClient(client)
             if (created) {
                 res.status(201).send(created);
             } else {
@@ -28,7 +28,9 @@ export default class ClientsController {
 
     public getClients = async (req: any, res: any) => {
         try {
-            const find = await this.ClientsModel.getClients(req.query.filter, req.query.skip, req.query.limit);
+            const { filter, skip, limit } = req.query
+
+            const find = await this.ClientsService.getClients(filter, skip, limit);
             if (find) {
                 res.status(200).send(find);
             } else {
@@ -43,7 +45,8 @@ export default class ClientsController {
     public deleteClient = async (req: any, res: any) => {
         try {
             const id = req.query.id;
-            const clientDeleted = await this.ClientsModel.deleteClient(id);
+            const clientDeleted = await this.ClientsService.deleteClient(id);
+
             if (clientDeleted) {
                 res.send(`Usuário ${clientDeleted._id} Foi Deletado`);
                 res.sendStatus(200);
@@ -60,7 +63,7 @@ export default class ClientsController {
         try {
             const id = req.query.id;
             const update: Partial<ICreateClient> = req.body;
-            const clientUpdate = await this.ClientsModel.updateClient(id, update);
+            const clientUpdate = await this.ClientsService.updateClient(id, update);
             if (clientUpdate) {
                 res.send(clientUpdate);
             } else {
